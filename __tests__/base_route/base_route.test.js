@@ -1,4 +1,4 @@
-import { status, testApiServer } from '../../src/utils';
+import { status, testApiServer, disconnect } from '../../src/utils';
 
 const entryRoute = '/';
 
@@ -13,5 +13,9 @@ describe('Base Route Test ', () => {
   it('should return 404 for a non-found route', async () => {
     const response = await testApiServer().get('/badRoute');
     expect(response.status).toBe(status.notfound);
+  });
+
+  afterAll(async () => {
+    await disconnect();
   });
 });

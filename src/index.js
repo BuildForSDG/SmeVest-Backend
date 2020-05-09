@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
 import Chalk from 'chalk';
 import app from './app';
+import config from './config';
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
+app.listen(config.port, () => {
   console.log(`
-        ${Chalk.blue(`💚 Project running on http://localhost:${port}`)}
+        ${Chalk.blue(`💚 Project running on http://localhost:${config.port}`)}
   `);
 });
