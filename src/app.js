@@ -1,8 +1,7 @@
-import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-
-config();
+import config from './config';
+import './db';
 
 // Create global app object
 const app = express();
@@ -12,8 +11,6 @@ app.use(cors());
 // Normal express config defaults
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-const isProduction = process.env.NODE_ENV === 'production';
 
 // Base Route Response
 app.get('/', (req, res) => res.json({ status: res.statusCode, message: 'Welcome to SmeVest server' }));
@@ -28,9 +25,8 @@ app.use((req, res, next) => {
 
 // development error handler
 // will print stacktrace
-if (!isProduction) {
+if (!config.production) {
   app.use((err, req, res) => {
-    // eslint-disable-next-line no-console
     console.log(err.stack);
     res.status(err.status || 500).json({
       errors: {

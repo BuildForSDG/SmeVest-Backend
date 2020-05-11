@@ -16,6 +16,9 @@ module.exports = {
   },
   rules: {
     'comma-dangle': ['error', 'never'],
-    'no-param-reassign': ['error', { props: false }]
+    'no-param-reassign': ['error', { props: false }],
+    'no-underscore-dangle': ['error', {  'allowAfterThis': true }],
+    'no-console': ['error', { allow: ['warn', 'error', 'log'] }],
+    'class-methods-use-this': ['error', {'exceptMethods': ['dbConnect']}]
   }
 };
