@@ -46,7 +46,8 @@
     "multer-storage-cloudinary": "^2.2.1",
     "randomstring": "^1.1.5",
     "supertest": "^4.0.2",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

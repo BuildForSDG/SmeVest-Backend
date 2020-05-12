@@ -1,4 +1,5 @@
-import { status, testApiServer, disconnect } from '../../src/utils';
+import { testApiServer, disconnect } from '../utils';
+import { status } from '../../src/utils';
 
 const entryRoute = '/';
 

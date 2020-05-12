@@ -15,10 +15,11 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'curly': ['error', 'multi-line'],
     'comma-dangle': ['error', 'never'],
     'no-param-reassign': ['error', { props: false }],
     'no-underscore-dangle': ['error', {  'allowAfterThis': true }],
     'no-console': ['error', { allow: ['warn', 'error', 'log'] }],
-    'class-methods-use-this': ['error', {'exceptMethods': ['dbConnect']}]
+    'class-methods-use-this': ['error', {'exceptMethods': ['dbConnect']}],
   }
 };

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import config from '../config';
+import config from '../../src/config';
 
 const connect = () => mongoose.connect(config.databaseUrl[config.environment],
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });

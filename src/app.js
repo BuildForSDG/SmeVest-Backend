@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import config from './config';
+import v1Router from './routes/v1';
 import './db';
 
 // Create global app object
@@ -15,6 +16,7 @@ app.use(express.json());
 // Base Route Response
 app.get('/', (req, res) => res.json({ status: res.statusCode, message: 'Welcome to SmeVest server' }));
 
+app.use('/api/v1/', v1Router);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -4,7 +4,7 @@
  */
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { disconnect } from '../../src/utils';
+import { disconnect } from '../utils';
 import config from '../../src/config';
 import { UserModel } from '../../src/models';
 

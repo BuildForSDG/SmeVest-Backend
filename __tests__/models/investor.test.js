@@ -3,7 +3,7 @@
  * @jest-environment node
  */
 import mongoose from 'mongoose';
-import { disconnect } from '../../src/utils';
+import { disconnect } from '../utils';
 import { UserModel, InvestorModel } from '../../src/models';
 
 describe('The Investor model', () => {
