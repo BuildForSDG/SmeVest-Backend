@@ -1,9 +1,14 @@
-import express from 'express';
-import registerUser from '../../controllers';
-import registerValidator from '../../validators';
+import { Router } from 'express';
+import authController from '../../controllers';
+import validators from '../../validators';
 
-const authRouter = express.Router();
+const authRouter = new Router();
 
-authRouter.post('/signup', registerValidator, registerUser);
+/** Route for registering a new user  */
+authRouter.post('/signup', validators.registerValidator, authController.registerUser);
+
+/** Route for generating jsonwebtoken and signing in an already existing user */
+authRouter.post('/signin', validators.signinValidator, authController.signInUser);
+
 
 export default authRouter;

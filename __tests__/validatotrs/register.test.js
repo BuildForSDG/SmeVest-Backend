@@ -2,7 +2,7 @@
 /**
  * @jest-environment node
  */
-import registerValidator from '../../src/validators';
+import validators from '../../src/validators';
 import { UserModel } from '../../src/models';
 
 class Response {
@@ -30,7 +30,7 @@ describe('The register validator', () => {
     const res = new Response();
     const reqSpy = jest.spyOn(UserModel, 'findOne').mockImplementation(() => null);
 
-    await registerValidator(req, res, next);
+    await validators.registerValidator(req, res, next);
     expect(reqSpy).toHaveBeenCalled();
     expect(next).toHaveBeenCalled();
   });
@@ -49,7 +49,7 @@ describe('The register validator', () => {
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 
-    await registerValidator(req, res, next);
+    await validators.registerValidator(req, res, next);
     expect(reqSpy).toHaveBeenCalled();
     expect(statusSpy).toHaveBeenCalledWith(422);
     expect(jsonSpy).toHaveBeenCalledWith({
@@ -75,7 +75,7 @@ describe('The register validator', () => {
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 
-    await registerValidator(req, res, next);
+    await validators.registerValidator(req, res, next);
     expect(statusSpy).toHaveBeenCalledWith(422);
     expect(jsonSpy).toHaveBeenCalledWith({
       message: 'Validation failed.',
@@ -100,7 +100,7 @@ describe('The register validator', () => {
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 
-    await registerValidator(req, res, next);
+    await validators.registerValidator(req, res, next);
     expect(statusSpy).toHaveBeenCalledWith(422);
     expect(jsonSpy).toHaveBeenCalledWith({
       message: 'Validation failed.',

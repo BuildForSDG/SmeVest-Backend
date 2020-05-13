@@ -1,3 +1,3 @@
-import registerUser from './auth';
+import authController from './auth';
 
-export default registerUser;
+export default authController;

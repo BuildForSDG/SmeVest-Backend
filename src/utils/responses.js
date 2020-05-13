@@ -21,7 +21,7 @@ const forgeResponse = (res, statusCode, message, data = null, token = null) => {
   };
 
   if (data) response.data = data;
-  if (data && token) response.token = token;
+  if (data && token) response.data.token = token;
   return res.status(statusCode).json(response);
 };
 
