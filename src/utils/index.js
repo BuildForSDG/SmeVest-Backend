@@ -1,10 +1,12 @@
 import status from './status_codes';
-import testApiServer from './test_api_server';
-import { disconnect, connect } from './mongoose';
+import {
+  conflictResponse, errorResponse, successResponse, messages
+} from './responses';
 
 export {
   status,
-  testApiServer,
-  disconnect,
-  connect
+  conflictResponse,
+  errorResponse,
+  successResponse,
+  messages
 };

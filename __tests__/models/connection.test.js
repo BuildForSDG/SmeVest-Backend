@@ -2,7 +2,7 @@
 /**
  * @jest-environment node
  */
-import { disconnect } from '../../src/utils';
+import { disconnect } from '../utils';
 import {
   UserModel, InvestorModel, SmeModel, ConnectionModel
 } from '../../src/models';
