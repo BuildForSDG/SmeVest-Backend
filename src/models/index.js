@@ -6,7 +6,7 @@ import SmeModel from './Sme';
 import ProjectModel from './Project';
 import MessageModel from './Message';
 
-export {
+export default {
   UserModel,
   ConnectionModel,
   InvestmentModel,

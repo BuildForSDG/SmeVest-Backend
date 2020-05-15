@@ -1,8 +1,9 @@
 module.exports = {
   moduleFileExtensions: ['js', 'json'],
-  rootDir: '__tests__',
+  rootDir: './',
   testRegex: ['.spec.js$', '.test.js$'],
   coverageDirectory: './coverage',
   testEnvironment: 'node',
+  collectCoverageFrom: ['src/**/{!(index),}.js'],
   testTimeout: 30000
 };

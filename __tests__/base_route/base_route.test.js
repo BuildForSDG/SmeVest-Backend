@@ -15,7 +15,6 @@ describe('Base Route Test ', () => {
     const response = await testApiServer().get('/badRoute');
     expect(response.status).toBe(status.notfound);
   });
-
   afterAll(async () => {
     await disconnect();
   });

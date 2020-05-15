@@ -29,7 +29,6 @@ app.use((req, res, next) => {
 // will print stacktrace
 if (!config.production) {
   app.use((err, req, res) => {
-    console.log(err.stack);
     res.status(err.status || 500).json({
       errors: {
         message: err.message,

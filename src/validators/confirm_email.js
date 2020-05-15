@@ -1,31 +1,38 @@
 import * as Yup from 'yup';
 import models from '../models';
-import { RegisterSchema } from '../validation_schemas';
+import { ConfirmEmailSchema } from '../validation_schemas';
 
 /**
- * Validates the registration request
+ * Validates the login request
+ *
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
+ *
  * @return {Object}
  */
 export default async (req, res, next) => {
-  const { email, password, role } = req.body;
+  const { token } = req.body;
 
   try {
-    await RegisterSchema.validate({
-      email,
-      password,
-      role
+    await ConfirmEmailSchema.validate({
+      token
     });
-    const existingUser = await models.UserModel.findOne({ email });
-    if (existingUser) {
+
+    const authUser = await models.UserModel.findOne({
+      emailConfirmCode: token
+    });
+
+    if (!authUser) {
       throw new Yup.ValidationError(
-        'This email has already been taken.',
+        'Invalid email confirmation token.',
         req.body,
         'email'
       );
     }
+
+    req.authUser = authUser;
+
     return next();
   } catch (error) {
     return res.status(422).json({

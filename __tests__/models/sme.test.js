@@ -4,7 +4,9 @@
  */
 import mongoose from 'mongoose';
 import { disconnect } from '../utils';
-import { UserModel, SmeModel } from '../../src/models';
+import models from '../../src/models';
+
+const { UserModel, SmeModel } = models;
 
 describe('The Sme model', () => {
   const user = {

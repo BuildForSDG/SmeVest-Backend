@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import randomstring from 'randomstring';
 import config from '../config';
+import services from '../services';
+
+const { sendEmailNodemailer } = services;
 
 const { Schema } = mongoose;
 
@@ -70,12 +73,31 @@ UserSchema.methods.comparePasswords = function (password) {
 };
 
 /**
+ * Send user email confirmation code after registration.
+ *
+ * @return {null}
+ */
+UserSchema.post('save', async function () {
+  await this.sendEmailConfirmationEmail();
+});
+
+/**
  * Generate a jwt for this user.
  *
  * @return {string}
  */
 UserSchema.methods.generateToken = function () {
   return jwt.sign({ id: this._id }, config.jwtSecret);
+};
+
+/**
+ * Send account confirmation email
+ *
+ * @return {Promise}
+ */
+UserSchema.methods.sendEmailConfirmationEmail = async function () {
+  const sentEmail = await sendEmailNodemailer(this.email, 'confirmEmail', { code: this.emailConfirmCode });
+  return sentEmail;
 };
 
 const UserModel = mongoose.model('User', UserSchema);

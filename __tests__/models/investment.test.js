@@ -4,9 +4,11 @@
  */
 import mongoose from 'mongoose';
 import { disconnect } from '../utils';
-import {
+import models from '../../src/models';
+
+const {
   UserModel, InvestorModel, ProjectModel, SmeModel, InvestmentModel
-} from '../../src/models';
+} = models;
 
 describe('The Message model', () => {
   const user = {

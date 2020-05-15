@@ -7,8 +7,8 @@
     "boilerplate"
   ],
   "private": false,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "directories": {
     "test": "__tests__"
   },
@@ -17,7 +17,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:cover": "cross-env NODE_ENV=test jest --coverage",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "parcel ./src/index.html",
+    "start": "node ./src/index.js",
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js"
   },
   "author": {
@@ -34,6 +34,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@sendgrid/mail": "^7.1.1",
     "bcrypt": "^4.0.1",
     "chalk": "^4.0.0",
     "cloudinary": "^1.21.0",
@@ -44,6 +45,7 @@
     "mongoose": "^5.9.12",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^2.2.1",
+    "nodemailer": "^6.4.6",
     "randomstring": "^1.1.5",
     "supertest": "^4.0.2",
     "uuid": "^8.0.0",

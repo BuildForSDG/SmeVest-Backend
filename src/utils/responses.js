@@ -10,6 +10,10 @@ const messages = {
     error: 'Could not sign in user try again',
     invalid: 'Invalid Credentials',
     unverified: 'Email not verified, check your mail to verify'
+  },
+  emailConfirm: {
+    success: 'Email confirmed successfully',
+    error: 'Error confirming email, please try again'
   }
 };
 

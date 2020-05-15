@@ -3,9 +3,11 @@
  * @jest-environment node
  */
 import { disconnect } from '../utils';
-import {
+import models from '../../src/models';
+
+const {
   UserModel, InvestorModel, SmeModel, ConnectionModel
-} from '../../src/models';
+} = models;
 
 describe('The Message model', () => {
   const user = {
