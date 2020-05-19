@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import * as models from '../models';
-import RegisterSchema from '../validation_schemas';
+import { RegisterSchema } from '../validation_schemas';
 
 /**
  * Validates the registration request
