@@ -6,7 +6,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { disconnect } from '../utils';
 import config from '../../src/config';
-import { UserModel } from '../../src/models';
+import models from '../../src/models';
+
+const { UserModel } = models;
 
 describe('The User model', () => {
   const user = {

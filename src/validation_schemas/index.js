@@ -21,7 +21,12 @@ export const SigninSchema = Yup.object().shape({
     .required()
 });
 
+export const ConfirmEmailSchema = Yup.object().shape({
+  token: Yup.string().required()
+});
+
 export default {
   RegisterSchema,
-  SigninSchema
+  SigninSchema,
+  ConfirmEmailSchema
 };

@@ -10,5 +10,7 @@ authRouter.post('/signup', validators.registerValidator, authController.register
 /** Route for generating jsonwebtoken and signing in an already existing user */
 authRouter.post('/signin', validators.signinValidator, authController.signInUser);
 
+/** Route for confirming email of an already existing user */
+authRouter.post('/emails/confirm', validators.confirmEmailValidator, authController.confirmEmail);
 
 export default authRouter;

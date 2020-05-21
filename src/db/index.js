@@ -9,7 +9,12 @@ class Database {
 
   dbConnect() {
     mongoose.connect(config.databaseUrl[config.environment],
-      { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+      {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false
+      })
       .then(() => {
         console.log(Chalk.yellow('Database connection successful'));
       })
