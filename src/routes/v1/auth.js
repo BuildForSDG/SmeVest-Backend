@@ -13,4 +13,7 @@ authRouter.post('/signin', validators.signinValidator, authController.signInUser
 /** Route for confirming email of an already existing user */
 authRouter.post('/emails/confirm', validators.confirmEmailValidator, authController.confirmEmail);
 
+/** Route for resending confirmation email  */
+authRouter.post('/emails/confirm/resend', validators.resendConfirmEmailValidator, authController.resendConfirmEmail);
+
 export default authRouter;

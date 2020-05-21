@@ -25,8 +25,13 @@ export const ConfirmEmailSchema = Yup.object().shape({
   token: Yup.string().required()
 });
 
+export const ResendConfirmEmailSchema = Yup.object().shape({
+  email: Yup.string().email().required()
+});
+
 export default {
   RegisterSchema,
   SigninSchema,
-  ConfirmEmailSchema
+  ConfirmEmailSchema,
+  ResendConfirmEmailSchema
 };

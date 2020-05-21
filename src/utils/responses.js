@@ -14,6 +14,12 @@ const messages = {
   emailConfirm: {
     success: 'Email confirmed successfully',
     error: 'Error confirming email, please try again'
+  },
+  resendEmailConfirm: {
+    success: 'Email confirmation resent successfully',
+    error: 'Error resending confirmation email, please try again',
+    conflict: 'Email already confirmed please sign in',
+    notfound: 'User Cannot be found'
   }
 };
 
