@@ -3,7 +3,9 @@
  * @jest-environment node
  */
 import validators from '../../src/validators';
-import UserModel from '../../src/models/User';
+import models from '../../src/models';
+
+const { UserModel, PasswordResetModel } = models;
 
 class Response {
   status(status) {
@@ -17,11 +19,13 @@ class Response {
   }
 }
 
-describe('The confirm email validator', () => {
-  it('should call the next function when validation succeeds', async () => {
+describe('The reset password validator', () => {
+  it('should call the next function when it succeeds', async () => {
     const req = {
       body: {
-        token: 'DFASGFASFAERFsfsdffs'
+        email: 'email@mails.com',
+        password: 'password',
+        token: 'randomtoken'
       }
     };
     const user = ({
@@ -33,58 +37,67 @@ describe('The confirm email validator', () => {
     });
     const next = jest.fn();
     const res = new Response();
-    const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(user);
+    const reqSpyOne = jest.spyOn(PasswordResetModel, 'findOne').mockReturnValue(true);
+    const reqSpyTwo = jest.spyOn(UserModel, 'findOne').mockReturnValue(user);
 
-    await validators.confirmEmailValidator(req, res, next);
-    expect(reqSpy).toHaveBeenCalled();
+
+    await validators.resetPasswordValidator(req, res, next);
+    expect(reqSpyOne).toHaveBeenCalled();
+    expect(reqSpyTwo).toHaveBeenCalled();
     expect(next).toHaveBeenCalled();
   });
 
   it('should return a 422 if validation fails due to invalid token', async () => {
     const req = {
       body: {
-        token: 12345
+        email: 'emails@mail.com',
+        password: 'password',
+        token: 34343
       }
     };
     const next = jest.fn();
     const res = new Response();
 
-    const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(null);
+    const reqSpy = jest.spyOn(PasswordResetModel, 'findOne').mockReturnValue(null);
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 
-    await validators.confirmEmailValidator(req, res, next);
+    await validators.resetPasswordValidator(req, res, next);
     expect(reqSpy).toHaveBeenCalled();
     expect(statusSpy).toHaveBeenCalledWith(422);
     expect(jsonSpy).toHaveBeenCalledWith({
       message: 'Validation failed.',
       data: {
         errors: {
-          email: 'Invalid email confirmation token.'
+          email: 'Invalid password reset token.'
         }
       }
     });
   });
 
-  it('should return a 422 if validation fails due to no token', async () => {
+  it('should return a 422 if validation fails due to no email', async () => {
     const req = {
       body: {
-        name: 'mynames'
+        email: '',
+        password: 'password',
+        token: 'randomtoken'
       }
     };
     const next = jest.fn();
     const res = new Response();
 
+    const reqSpy = jest.spyOn(PasswordResetModel, 'findOne').mockReturnValue(null);
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 
-    await validators.confirmEmailValidator(req, res, next);
+    await validators.resetPasswordValidator(req, res, next);
+    expect(reqSpy).toHaveBeenCalled();
     expect(statusSpy).toHaveBeenCalledWith(422);
     expect(jsonSpy).toHaveBeenCalledWith({
       message: 'Validation failed.',
       data: {
         errors: {
-          token: 'token is a required field'
+          email: 'email is a required field'
         }
       }
     });

@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 config();
 
 export default {
-  url: process.env.APP_URL || 'http://localhost:3000/api/v1',
+  url: process.env.APP_URL || 'http://localhost:3000',
   port: process.env.PORT || 3000,
   environment: process.env.NODE_ENV || 'development',
 

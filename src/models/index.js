@@ -5,6 +5,7 @@ import InvestorModel from './Investor';
 import SmeModel from './Sme';
 import ProjectModel from './Project';
 import MessageModel from './Message';
+import PasswordResetModel from './PasswordReset';
 
 export default {
   UserModel,
@@ -13,5 +14,6 @@ export default {
   InvestorModel,
   SmeModel,
   ProjectModel,
-  MessageModel
+  MessageModel,
+  PasswordResetModel
 };
