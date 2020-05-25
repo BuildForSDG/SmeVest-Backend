@@ -102,8 +102,37 @@ const confirmEmail = async (req, res) => {
   }
 };
 
+/**
+   * @method resendConfirmEmail
+   * @description Method for user to resend email confirmation
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} response body object
+   */
+const resendConfirmEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return errorResponse(res, status.notfound, messages.resendEmailConfirm.notfound);
+    }
+
+    if (user && user.emailConfirmedAt) {
+      return errorResponse(res, status.conflict, messages.resendEmailConfirm.conflict);
+    }
+
+    await user.sendEmailConfirmationEmail();
+
+    return successResponse(res, status.success, messages.resendEmailConfirm.success);
+  } catch (error) {
+    return errorResponse(res, status.error, messages.resendEmailConfirm.error);
+  }
+};
+
 export default {
   registerUser,
   signInUser,
-  confirmEmail
+  confirmEmail,
+  resendConfirmEmail
 };

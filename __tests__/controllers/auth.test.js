@@ -75,9 +75,9 @@ describe('The authentication controller', () => {
       const statusSpy = jest.spyOn(res, 'status');
       const jsonSpy = jest.spyOn(res, 'json');
       await authController.signInUser(req, res, next);
-      expect(statusSpy).toHaveBeenCalledWith(401);
+      expect(statusSpy).toHaveBeenCalledWith(403);
       expect(jsonSpy).toHaveBeenCalledWith({
-        status: 401,
+        status: 403,
         message: 'Email not verified, check your mail to verify'
       });
     });
@@ -96,9 +96,9 @@ describe('The authentication controller', () => {
       const jsonSpy = jest.spyOn(res, 'json');
       await authController.signInUser(req, res, next);
       expect(reqSpy).toHaveBeenCalled();
-      expect(statusSpy).toHaveBeenCalledWith(401);
+      expect(statusSpy).toHaveBeenCalledWith(404);
       expect(jsonSpy).toHaveBeenCalledWith({
-        status: 401,
+        status: 404,
         message: 'User Cannot be found'
       });
     });
@@ -226,6 +226,104 @@ describe('The authentication controller', () => {
     });
   });
 
+  describe('Resend Confirmation test', () => {
+    it('fakes a unsuccessful resend confirmation because user is not found', async () => {
+      const req = {
+        body: {
+          email: 'nomail@mail.com'
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(null);
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+      await authController.resendConfirmEmail(req, res, next);
+      expect(reqSpy).toHaveBeenCalled();
+      expect(statusSpy).toHaveBeenCalledWith(404);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 404,
+        message: 'User Cannot be found'
+      });
+    });
+
+    it('fakes a successful resend confirmation', async () => {
+      const req = {
+        body: {
+          email: dummyUser.email
+        }
+      };
+
+      const user = ({
+        _id: 'ksd095',
+        isVerified: false,
+        email: dummyUser.email,
+        role: dummyUser.role,
+        password: dummyUser.password,
+        emailConfirmedAt: '',
+        sendEmailConfirmationEmail: jest.fn()
+      });
+
+      const next = jest.fn();
+      const res = new Response();
+      const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(user);
+      const statusSpy = jest.spyOn(res, 'status');
+      await authController.resendConfirmEmail(req, res, next);
+      expect(reqSpy).toHaveBeenCalled();
+      expect(statusSpy).toHaveBeenCalledWith(200);
+    });
+
+    it('fakes a unsuccessful resend confirmation because email has been confirmed before', async () => {
+      const req = {
+        body: {
+          email: dummyUser.email
+        }
+      };
+      const user = ({
+        _id: 'ksd095',
+        isVerified: true,
+        email: dummyUser.email,
+        role: dummyUser.role,
+        password: dummyUser.password,
+        emailConfirmedAt: '2020-05-12T18:09:04.141Z'
+      });
+
+      const next = jest.fn();
+      const res = new Response();
+      const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(user);
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+
+      await authController.resendConfirmEmail(req, res, next);
+      expect(reqSpy).toHaveBeenCalled();
+      expect(statusSpy).toHaveBeenCalledWith(409);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 409,
+        message: 'Email already confirmed please sign in'
+      });
+    });
+
+    it('fake server error(500), if error occurs when resend confirmation', async () => {
+      const req = {
+        body: {
+          email: 'a@mails.com'
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const reqSpy = jest.spyOn(UserModel, 'findOne').mockReturnValue(new Error());
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+
+      await authController.resendConfirmEmail(req, res, next);
+      expect(reqSpy).toHaveBeenCalled();
+      expect(statusSpy).toHaveBeenCalledWith(500);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 500,
+        message: 'Error resending confirmation email, please try again'
+      });
+    });
+  });
 
   afterAll(async () => {
     await disconnect();
