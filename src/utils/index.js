@@ -4,6 +4,8 @@ import {
 } from './responses';
 import emailTemplateFunction from './email_template_func';
 import getCallbackUrls from './get_callback_urls';
+import bcrypt from './bcrypt';
+
 
 export {
   status,
@@ -12,5 +14,6 @@ export {
   successResponse,
   messages,
   emailTemplateFunction,
-  getCallbackUrls
+  getCallbackUrls,
+  bcrypt
 };

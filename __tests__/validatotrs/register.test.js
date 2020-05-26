@@ -28,7 +28,7 @@ describe('The register validator', () => {
     };
     const next = jest.fn();
     const res = new Response();
-    const reqSpy = jest.spyOn(models.UserModel, 'findOne').mockImplementation(() => null);
+    const reqSpy = jest.spyOn(models.UserModel, 'findOne').mockReturnValue(null);
 
     await validators.registerValidator(req, res, next);
     expect(reqSpy).toHaveBeenCalled();
@@ -45,7 +45,7 @@ describe('The register validator', () => {
     };
     const next = jest.fn();
     const res = new Response();
-    const reqSpy = jest.spyOn(models.UserModel, 'findOne').mockImplementation(() => true);
+    const reqSpy = jest.spyOn(models.UserModel, 'findOne').mockReturnValue(true);
     const statusSpy = jest.spyOn(res, 'status');
     const jsonSpy = jest.spyOn(res, 'json');
 

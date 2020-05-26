@@ -1,9 +1,11 @@
 import models from '../models';
 import {
-  successResponse, errorResponse, messages, status
+  successResponse, errorResponse, messages, status, bcrypt
 } from '../utils';
 
-const { UserModel } = models;
+const { UserModel, PasswordResetModel } = models;
+const { hashPassword } = bcrypt;
+
 /**
  * @method registerUser
  * @description Method for user registration
@@ -66,6 +68,49 @@ const signInUser = async (req, res) => {
     return successResponse(res, status.success, messages.signIn.success, response, token);
   } catch (error) {
     return errorResponse(res, status.error, messages.signIn.error);
+  }
+};
+
+/**
+   * @method forgotPassword
+   * @description Method for user forgot password
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} response body object
+   */
+
+const forgotPassword = async (req, res) => {
+  try {
+    await req.authUser.forgotPassword();
+
+    return successResponse(res, status.success, messages.forgotPassword.success);
+  } catch (error) {
+    return errorResponse(res, status.error, messages.forgotPassword.error);
+  }
+};
+
+/**
+   * @method resetPassword
+   * @description Method for user reset password
+   * @param {object} req - The Request Object
+   * @param {object} res - The Response Object
+   * @returns {object} response body object
+   */
+
+const resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    await UserModel.findOneAndUpdate(
+      { email: req.authUser.email },
+      { password: hashPassword(password) }
+    );
+
+    await PasswordResetModel.findOneAndDelete({ email: req.authUser.email });
+
+    return successResponse(res, status.success, messages.resetPassword.success);
+  } catch (error) {
+    return errorResponse(res, status.error, messages.resetPassword.error);
   }
 };
 
@@ -134,5 +179,7 @@ export default {
   registerUser,
   signInUser,
   confirmEmail,
-  resendConfirmEmail
+  resendConfirmEmail,
+  forgotPassword,
+  resetPassword
 };

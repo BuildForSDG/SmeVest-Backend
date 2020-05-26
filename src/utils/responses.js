@@ -20,6 +20,14 @@ const messages = {
     error: 'Error resending confirmation email, please try again',
     conflict: 'Email already confirmed please sign in',
     notfound: 'User Cannot be found'
+  },
+  forgotPassword: {
+    success: 'Forgot password email sent',
+    error: 'Error sending forgot password email, try again'
+  },
+  resetPassword: {
+    success: 'Password has been reset',
+    error: 'Error reseting password, try again'
   }
 };
 

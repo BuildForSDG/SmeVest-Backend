@@ -1,6 +1,6 @@
 import emailTemplates from './email_template';
 
-const { confirmEmailTemplate } = emailTemplates;
+const { confirmEmailTemplate, passwordResetTemplate } = emailTemplates;
 
 let html;
 const emailTemplatesFunction = (category, data) => {
@@ -9,6 +9,12 @@ const emailTemplatesFunction = (category, data) => {
       html = confirmEmailTemplate(data);
       return {
         subject: 'Confirm your Email Account',
+        html
+      };
+    case 'passwordReset':
+      html = passwordResetTemplate(data);
+      return {
+        subject: 'Reset your password',
         html
       };
     default:

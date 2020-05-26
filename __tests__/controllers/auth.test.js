@@ -6,6 +6,7 @@
 import { disconnect } from '../utils';
 import authController from '../../src/controllers';
 import models from '../../src/models';
+import PasswordResetModel from '../../src/models/PasswordReset';
 
 const { UserModel } = models;
 
@@ -321,6 +322,92 @@ describe('The authentication controller', () => {
       expect(jsonSpy).toHaveBeenCalledWith({
         status: 500,
         message: 'Error resending confirmation email, please try again'
+      });
+    });
+  });
+
+  describe('Forgot Password test', () => {
+    it('fakes a successful forgot password email sent', async () => {
+      const req = {
+        authUser: {
+          forgotPassword: jest.fn()
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+      await authController.forgotPassword(req, res, next);
+      expect(statusSpy).toHaveBeenCalledWith(200);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 200,
+        message: 'Forgot password email sent'
+      });
+    });
+
+    it('fake server error(500), if error occurs when sending forgot password email', async () => {
+      const req = {
+        authUser: {
+
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+      await authController.forgotPassword(req, res, next);
+      expect(statusSpy).toHaveBeenCalledWith(500);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 500,
+        message: 'Error sending forgot password email, try again'
+      });
+    });
+  });
+
+  describe('Reset Password test', () => {
+    it('fakes a successful reset password', async () => {
+      const req = {
+        body: {
+          password: 'password'
+        },
+        authUser: {
+          email: 'emails@mail.com'
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const reqSpyOne = jest.spyOn(UserModel, 'findOneAndUpdate').mockReturnValue({});
+      const reqSpyTwo = jest.spyOn(PasswordResetModel, 'findOneAndDelete');
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+      await authController.resetPassword(req, res, next);
+      expect(reqSpyOne).toHaveBeenCalled();
+      expect(reqSpyTwo).toHaveBeenCalled();
+      expect(statusSpy).toHaveBeenCalledWith(200);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 200,
+        message: 'Password has been reset'
+      });
+    });
+
+    it('fake server error(500), if error occurs when resetting password', async () => {
+      const req = {
+        body: {
+          wrongfield: 'password'
+        },
+        authUser: {
+          email: 'emails@mail.com'
+        }
+      };
+      const next = jest.fn();
+      const res = new Response();
+      const statusSpy = jest.spyOn(res, 'status');
+      const jsonSpy = jest.spyOn(res, 'json');
+      await authController.resetPassword(req, res, next);
+      expect(statusSpy).toHaveBeenCalledWith(500);
+      expect(jsonSpy).toHaveBeenCalledWith({
+        status: 500,
+        message: 'Error reseting password, try again'
       });
     });
   });

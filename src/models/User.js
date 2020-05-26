@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import randomstring from 'randomstring';
 import config from '../config';
 import services from '../services';
+import PasswordResetModel from './PasswordReset';
 
 const { sendEmailNodemailer } = services;
 
@@ -97,6 +98,32 @@ UserSchema.methods.generateToken = function () {
  */
 UserSchema.methods.sendEmailConfirmationEmail = async function () {
   const sentEmail = await sendEmailNodemailer(this.email, 'confirmEmail', { code: this.emailConfirmCode });
+  return sentEmail;
+};
+
+/**
+ * Handle forgot password for user.
+ *
+ * @return {Promise}
+ */
+UserSchema.methods.forgotPassword = async function () {
+  const token = randomstring.generate(32);
+
+  await PasswordResetModel.create({
+    token,
+    email: this.email
+  });
+
+  await this.sendForgotPasswordEmail(token);
+};
+
+/**
+* Send a password reset email to this user.
+*
+* @return {Promise}
+*/
+UserSchema.methods.sendForgotPasswordEmail = async function (token) {
+  const sentEmail = await sendEmailNodemailer(this.email, 'passwordReset', { url: `${config.url}/reset/${token}` });
   return sentEmail;
 };
 

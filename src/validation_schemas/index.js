@@ -29,9 +29,28 @@ export const ResendConfirmEmailSchema = Yup.object().shape({
   email: Yup.string().email().required()
 });
 
+export const ForgotPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .email()
+    .required()
+});
+
+export const ResetPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .email()
+    .required(),
+  password: Yup.string()
+    .min(6)
+    .max(10)
+    .required(),
+  token: Yup.string().required()
+});
+
 export default {
   RegisterSchema,
   SigninSchema,
   ConfirmEmailSchema,
-  ResendConfirmEmailSchema
+  ResendConfirmEmailSchema,
+  ResetPasswordSchema,
+  ForgotPasswordSchema
 };
