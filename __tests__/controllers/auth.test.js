@@ -4,11 +4,10 @@
  */
 
 import { disconnect } from '../utils';
-import authController from '../../src/controllers';
+import { authController } from '../../src/controllers';
 import models from '../../src/models';
-import PasswordResetModel from '../../src/models/PasswordReset';
 
-const { UserModel } = models;
+const { UserModel, PasswordResetModel } = models;
 
 class Response {
   status(status) {

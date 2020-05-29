@@ -1,3 +1,8 @@
 import authController from './auth';
+import profileController from './profile';
 
-export default authController;
+
+export {
+  authController,
+  profileController
+};

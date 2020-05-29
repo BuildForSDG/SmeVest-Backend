@@ -28,6 +28,10 @@ const messages = {
   resetPassword: {
     success: 'Password has been reset',
     error: 'Error reseting password, try again'
+  },
+  createProfile: {
+    success: 'Profile created successfully',
+    error: 'Error creating profile, try again'
   }
 };
 

@@ -1,5 +1,9 @@
 import authMiddleWare from './auth';
+import { multerUploads, dataUri } from './multer_uploads';
 
-export default {
-  authMiddleWare
+
+export {
+  authMiddleWare,
+  multerUploads,
+  dataUri
 };

@@ -30,8 +30,11 @@ describe('The Sme model', () => {
 
   beforeAll(async () => {
     await UserModel.deleteMany();
-    await SmeModel.deleteMany();
     createdUser = await UserModel.create(user);
+  });
+
+  beforeEach(async () => {
+    await SmeModel.deleteMany();
   });
 
   it('Create Sme Details successfully', async () => {

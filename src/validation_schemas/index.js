@@ -46,6 +46,15 @@ export const ResetPasswordSchema = Yup.object().shape({
   token: Yup.string().required()
 });
 
+export const CreateProfileSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  about: Yup.string().required(),
+  category: Yup.string().required(),
+  city: Yup.string().required(),
+  address: Yup.string().required(),
+  teamSize: Yup.string().required()
+});
+
 export default {
   RegisterSchema,
   SigninSchema,
