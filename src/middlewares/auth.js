@@ -22,8 +22,10 @@ export default async (req, res, next) => {
 
     const payload = jwt.verify(token, config.jwtSecret);
     const authUser = await models.UserModel.findById(payload.id);
+    const response = authUser.toJSON();
+    delete response.password;
 
-    req.authUser = authUser;
+    req.authUser = response;
 
     return next();
   } catch (error) {

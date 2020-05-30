@@ -55,11 +55,21 @@ export const CreateProfileSchema = Yup.object().shape({
   teamSize: Yup.string().required()
 });
 
+export const UpdateProfileSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  about: Yup.string().required(),
+  category: Yup.string().required(),
+  city: Yup.string().required(),
+  address: Yup.string().required(),
+  teamSize: Yup.string().required()
+});
+
 export default {
   RegisterSchema,
   SigninSchema,
   ConfirmEmailSchema,
   ResendConfirmEmailSchema,
   ResetPasswordSchema,
-  ForgotPasswordSchema
+  ForgotPasswordSchema,
+  UpdateProfileSchema
 };
