@@ -5,7 +5,7 @@ import resendConfirmEmailValidator from './resend_confirm';
 import forgotPasswordValidator from './forgot_password';
 import resetPasswordValidator from './reset_password';
 import createProfileValidator from './create_profile';
-
+import updateProfileValidator from './update_profile';
 
 
 export default {
@@ -15,5 +15,6 @@ export default {
   resendConfirmEmailValidator,
   resetPasswordValidator,
   forgotPasswordValidator,
-  createProfileValidator
+  createProfileValidator,
+  updateProfileValidator
 };

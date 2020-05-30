@@ -32,6 +32,14 @@ const messages = {
   createProfile: {
     success: 'Profile created successfully',
     error: 'Error creating profile, try again'
+  },
+  getProfile: {
+    success: 'Profile retrieved successfully',
+    error: 'Error retrieving profile, try again'
+  },
+  updateProfile: {
+    success: 'Profile updated successfully',
+    error: 'Error updating profile, try again'
   }
 };
 
