@@ -20,7 +20,7 @@ describe('The Investor model', () => {
     type: 'organization',
     name: 'Investing Company',
     about: 'we love smes',
-    categories: 'information technology',
+    category: 'information technology',
     city: 'Lagos',
     address: 'Vitorial Island'
   };
@@ -30,8 +30,11 @@ describe('The Investor model', () => {
 
   beforeAll(async () => {
     await UserModel.deleteMany();
-    await InvestorModel.deleteMany();
     createdUser = await UserModel.create(user);
+  });
+
+  beforeEach(async () => {
+    await InvestorModel.deleteMany();
   });
 
   it('Create Investor Details successfully', async () => {
@@ -41,7 +44,7 @@ describe('The Investor model', () => {
     expect(createdInvestor._id).toBeDefined();
     expect(createdInvestor.name).toBe(inv.name);
     expect(createdInvestor.about).toBe(inv.about);
-    expect(createdInvestor.categories).toContain(inv.categories);
+    expect(createdInvestor.category).toContain(inv.category);
     expect(createdInvestor.city).toBe(inv.city);
     expect(createdInvestor.address).toBe(inv.address);
     expect(createdInvestor.city).toBe(inv.city);

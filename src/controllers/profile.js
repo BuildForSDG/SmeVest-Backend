@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import models from '../models';
 import {
-  successResponse, errorResponse, messages, status, imageUpload
+  successResponse, errorResponse, messages, status, imageUpload, stringToArray
 } from '../utils';
 
 const { SmeModel, InvestorModel } = models;
@@ -26,6 +26,9 @@ const createProfile = async (req, res) => {
     }
 
     if (req.authUser.role === 'investor') {
+      if (typeof req.body.category === 'string') {
+        req.body.category = stringToArray(req.body.category);
+      }
       profile = await InvestorModel.create(req.body);
     }
 
@@ -67,6 +70,9 @@ const updateProfile = async (req, res) => {
     }
 
     if (req.authUser.role === 'investor') {
+      if (typeof req.body.category === 'string') {
+        req.body.category = stringToArray(req.body.category);
+      }
       profile = await InvestorModel.findOneAndUpdate({ userId: req.authUser._id }, req.body, {
         new: true
       });

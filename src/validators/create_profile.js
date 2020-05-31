@@ -23,7 +23,15 @@ export default async (req, res, next) => {
       address,
       teamSize
     });
-    const existingProfile = await models.SmeModel.findOne({ userId: req.authUser._id });
+    let existingProfile;
+    if (req.authUser.role === 'sme') {
+      existingProfile = await models.SmeModel.findOne({ userId: req.authUser._id });
+    }
+
+    if (req.authUser.role === 'investor') {
+      existingProfile = await models.InvestorModel.findOne({ userId: req.authUser._id });
+    }
+
     if (existingProfile) {
       throw new Yup.ValidationError(
         'This user has already created profile.',

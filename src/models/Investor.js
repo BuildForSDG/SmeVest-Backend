@@ -6,7 +6,9 @@ const { Schema } = mongoose;
 const InvestorSchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true,
+    unique: true
   },
   type: {
     type: String,
@@ -29,7 +31,7 @@ const InvestorSchema = new Schema({
     type: String,
     required: true
   },
-  categories: [String],
+  category: [String],
   country: {
     type: String,
     required: false,
