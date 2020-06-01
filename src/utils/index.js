@@ -6,6 +6,7 @@ import emailTemplateFunction from './email_template_func';
 import getCallbackUrls from './get_callback_urls';
 import bcrypt from './bcrypt';
 import imageUpload from './image_upload';
+import stringToArray from './string_to_array';
 
 
 export {
@@ -17,5 +18,6 @@ export {
   emailTemplateFunction,
   getCallbackUrls,
   bcrypt,
-  imageUpload
+  imageUpload,
+  stringToArray
 };
