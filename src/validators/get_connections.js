@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { UpdateProfileSchema } from '../validation_schemas';
+import { GetConnectionsSchema } from '../validation_schemas';
 
 /**
  * Validates the profile creation request
@@ -10,18 +10,14 @@ import { UpdateProfileSchema } from '../validation_schemas';
  */
 export default async (req, res, next) => {
   const {
-    name, about, category, city, address, teamSize, type
+    connectionInvestor, connectionSme
   } = req.body;
   try {
-    const validateSchema = await UpdateProfileSchema(req.authUser.role);
+    const validateSchema = await GetConnectionsSchema(req.authUser.role);
     await validateSchema.validate({
-      name,
-      about,
-      category,
-      city,
-      address,
-      teamSize,
-      type
+      connectionInvestor,
+      connectionSme
+
     });
 
     return next();

@@ -4,17 +4,25 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const ConnectionSchema = new Schema({
-  smeId: {
+  connectionSme: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sme'
   },
-  invId: {
+  connectionInvestor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Investor'
+  },
+  smeConnecting: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Sme'
+  },
+  investorConnecting: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Investor'
   },
   status: {
     type: String,
-    enum: ['pending', 'declined', 'active'],
+    enum: ['pending', 'active'],
     default: 'pending',
     required: true
   },

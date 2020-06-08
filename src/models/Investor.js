@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const InvestorSchema = new Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -31,7 +31,12 @@ const InvestorSchema = new Schema({
     type: String,
     required: true
   },
-  category: [String],
+  category: [
+    {
+      type: String,
+      required: true,
+      lowercase: true
+    }],
   country: {
     type: String,
     required: false,

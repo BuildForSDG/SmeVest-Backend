@@ -12,17 +12,20 @@ import { CreateProfileSchema } from '../validation_schemas';
  */
 export default async (req, res, next) => {
   const {
-    name, about, category, city, address, teamSize
+    name, about, category, city, address, teamSize, type
   } = req.body;
   try {
-    await CreateProfileSchema.validate({
+    const validateSchema = await CreateProfileSchema(req.authUser.role);
+    await validateSchema.validate({
       name,
       about,
       category,
       city,
       address,
-      teamSize
+      teamSize,
+      type
     });
+
     let existingProfile;
     if (req.authUser.role === 'sme') {
       existingProfile = await models.SmeModel.findOne({ userId: req.authUser._id });
