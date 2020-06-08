@@ -4,11 +4,11 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const MessageSchema = new Schema({
-  smeId: {
+  sme: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sme'
   },
-  invId: {
+  investor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Investor'
   },

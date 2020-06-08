@@ -4,11 +4,11 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const ProjectSchema = new Schema({
-  invId: {
+  investor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Investor'
   },
-  name: {
+  title: {
     type: String,
     required: true
   },

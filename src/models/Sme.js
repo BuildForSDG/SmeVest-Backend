@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const SmeSchema = new Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -28,7 +28,8 @@ const SmeSchema = new Schema({
   },
   category: {
     type: String,
-    required: true
+    required: true,
+    lowercase: true
   },
   country: {
     type: String,

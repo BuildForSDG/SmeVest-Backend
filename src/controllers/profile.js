@@ -7,8 +7,8 @@ import {
 const { SmeModel, InvestorModel } = models;
 
 /**
- * @method registerUser
- * @description Method for user registration
+ * @method createProfile
+ * @description Method for profile creation
  * @param {object} req - The Request Object
  * @param {object} res - The Response Object
  * @returns {object} response body object
@@ -16,7 +16,7 @@ const { SmeModel, InvestorModel } = models;
 const createProfile = async (req, res) => {
   try {
     let profile;
-    req.body.userId = req.authUser._id;
+    req.body.user = req.authUser._id;
 
     if (req.file) {
       req.body.profilePic = await imageUpload(req);
@@ -41,47 +41,76 @@ const createProfile = async (req, res) => {
   }
 };
 
+/**
+ * @method getProfile
+ * @description Method for getting profile details
+ * @param {object} req - The Request Object
+ * @param {object} res - The Response Object
+ * @returns {object} response body object
+ */
+
 const getProfile = async (req, res) => {
   try {
     let profile;
+
     if (req.authUser.role === 'sme') {
-      profile = await SmeModel.findOne({ userId: req.authUser._id });
+      profile = await SmeModel.findOne({ user: req.authUser._id }).populate('user');
     }
 
     if (req.authUser.role === 'investor') {
-      profile = await InvestorModel.findOne({ userId: req.authUser._id });
+      profile = await InvestorModel.findOne({ user: req.authUser._id }).populate('user');
     }
+
+    if (!profile) {
+      return errorResponse(res, status.notfound, messages.getProfile.notfound);
+    }
+
     const response = profile.toJSON();
+    delete response.user.password;
 
     return successResponse(res, status.success,
       messages.getProfile.success, response);
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     return errorResponse(res, status.error, messages.getProfile.error);
   }
 };
 
+/**
+ * @method updateProfile
+ * @description Method for updating profile
+ * @param {object} req - The Request Object
+ * @param {object} res - The Response Object
+ * @returns {object} response body object
+ */
+
 const updateProfile = async (req, res) => {
   try {
     let profile;
+    console.log(req.file)
+    if (req.file) {
+      req.body.profilePic = await imageUpload(req);
+    }
     if (req.authUser.role === 'sme') {
-      profile = await SmeModel.findOneAndUpdate({ userId: req.authUser._id }, req.body, {
+      profile = await SmeModel.findOneAndUpdate({ user: req.authUser._id }, req.body, {
         new: true
-      });
+      }).populate('user');
     }
 
     if (req.authUser.role === 'investor') {
       if (typeof req.body.category === 'string') {
         req.body.category = stringToArray(req.body.category);
       }
-      profile = await InvestorModel.findOneAndUpdate({ userId: req.authUser._id }, req.body, {
+      profile = await InvestorModel.findOneAndUpdate({ user: req.authUser._id }, req.body, {
         new: true
-      });
+      }).populate('user');
     }
     const response = profile.toJSON();
+    delete response.user.password;
 
     return successResponse(res, status.success,
       messages.updateProfile.success, response);
-  } catch (err) {
+  } catch (error) {
     return errorResponse(res, status.error, messages.updateProfile.error);
   }
 };
